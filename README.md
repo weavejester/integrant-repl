@@ -14,7 +14,7 @@ Integrant, rather than [Component][].
 
 Add the following dependency to your dev profile:
 
-    [integrant/repl "0.1.0-SNAPSHOT"]
+    [integrant/repl "0.1.0"]
 
 ## Usage
 
