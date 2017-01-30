@@ -18,7 +18,7 @@
 
 (defn prep []
   (if-let [prep preparer]
-    (do (alter-var-root #'config (fn [_] (preparer))) :prepped)
+    (do (alter-var-root #'config (fn [_] (prep))) :prepped)
     (throw (prep-error))))
 
 (defn- halt-system [system]
@@ -47,9 +47,10 @@
 
 (defn resume []
   (if-let [prep preparer]
-    (do (alter-var-root #'config (fn [_] (preparer)))
-        (alter-var-root #'system (fn [sys] (ig/resume config sys)))
-        :resumed)
+    (let [cfg (prep)]
+      (alter-var-root #'config (constantly cfg))
+      (alter-var-root #'system (fn [sys] (ig/resume cfg sys)))
+      :resumed)
     (throw (prep-error))))
 
 (defn reset []
