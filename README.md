@@ -29,7 +29,7 @@ For example:
   (:require [integrant.repl :refer [config system prep init go halt
                                     clear reset reset-all]])
 
-(set-prep! (constantly {::foo {:example? true}}))
+(integrant.repl/set-prep! (constantly {::foo {:example? true}}))
 ```
 
 ## License
