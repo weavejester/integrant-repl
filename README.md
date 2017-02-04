@@ -32,6 +32,49 @@ For example:
 (integrant.repl/set-prep! (constantly {::foo {:example? true}}))
 ```
 
+To prepare the configuration, you can now use:
+
+```clojure
+user=> (prep)
+:prepped
+```
+
+The configuration is stored in `config`. To initiate the
+configuration, use:
+
+```clojure
+user=> (init)
+:initiated
+```
+
+This will turn the configuration into a running system, which is
+stored in `system`.
+
+Because these two steps are common, we can instead use:
+
+```clojure
+user=> (go)
+:initiated
+```
+
+This performs the `(prep)` and `(init)` steps together. Once the
+system is running, we can stop it at any time:
+
+```clojure
+user=> (halt)
+:halted
+```
+
+If we want to reload our source files and restart the system, we can
+use:
+
+```clojure
+user=> (reset)
+:reloading (...)
+:resumed
+```
+
+
 ## License
 
 Copyright © 2016 James Reeves
