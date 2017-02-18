@@ -49,7 +49,7 @@
   (if-let [prep preparer]
     (let [cfg (prep)]
       (alter-var-root #'config (constantly cfg))
-      (alter-var-root #'system (fn [sys] (ig/resume cfg sys)))
+      (alter-var-root #'system (fn [sys] (if sys (ig/resume cfg sys) (ig/init cfg))))
       :resumed)
     (throw (prep-error))))
 
