@@ -27,7 +27,7 @@ For example:
 ```clojure
 (ns user
   (:require [integrant.repl :refer [config system prep init go halt
-                                    clear reset reset-all]])
+                                    clear reset reset-all]]))
 
 (integrant.repl/set-prep! (constantly {::foo {:example? true}}))
 ```
