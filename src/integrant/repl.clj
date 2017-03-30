@@ -1,31 +1,24 @@
 (ns integrant.repl
   (:require [integrant.core :as ig]
+            [integrant.repl.state :as state]
             [clojure.tools.namespace.repl :as repl]))
 
-(repl/disable-reload!)
-
-(def config nil)
-
-(def system nil)
-
-(def preparer nil)
-
 (defn set-prep! [prep]
-  (alter-var-root #'preparer (constantly prep)))
+  (alter-var-root #'state/preparer (constantly prep)))
 
 (defn- prep-error []
   (Error. "No system preparer function found."))
 
 (defn prep []
-  (if-let [prep preparer]
-    (do (alter-var-root #'config (fn [_] (prep))) :prepped)
+  (if-let [prep state/preparer]
+    (do (alter-var-root #'state/config (fn [_] (prep))) :prepped)
     (throw (prep-error))))
 
 (defn- halt-system [system]
   (when system (ig/halt! system)))
 
 (defn init []
-  (alter-var-root #'system (fn [sys] (halt-system sys) (ig/init config)))
+  (alter-var-root #'state/system (fn [sys] (halt-system sys) (ig/init state/config)))
   :initiated)
 
 (defn go []
@@ -33,23 +26,24 @@
   (init))
 
 (defn clear []
-  (alter-var-root #'system (fn [sys] (halt-system sys) nil))
-  (alter-var-root #'config (constantly nil))
+  (alter-var-root #'state/system (fn [sys] (halt-system sys) nil))
+  (alter-var-root #'state/config (constantly nil))
   :cleared)
 
 (defn halt []
-  (halt-system system)
+  (halt-system state/system)
+  (alter-var-root #'state/system (constantly nil))
   :halted)
 
 (defn suspend []
-  (when system (ig/suspend! system))
+  (when state/system (ig/suspend! state/system))
   :suspended)
 
 (defn resume []
-  (if-let [prep preparer]
+  (if-let [prep state/preparer]
     (let [cfg (prep)]
-      (alter-var-root #'config (constantly cfg))
-      (alter-var-root #'system (fn [sys] (if sys (ig/resume cfg sys) (ig/init cfg))))
+      (alter-var-root #'state/config (constantly cfg))
+      (alter-var-root #'state/system (fn [sys] (if sys (ig/resume cfg sys) (ig/init cfg))))
       :resumed)
     (throw (prep-error))))
 
