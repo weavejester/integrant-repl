@@ -3,8 +3,6 @@
 
 (repl/disable-reload!)
 
-(def config nil)
-
-(def system nil)
-
+(def config   nil)
+(def system   nil)
 (def preparer nil)
