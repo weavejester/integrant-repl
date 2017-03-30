@@ -38,8 +38,8 @@ user=> (prep)
 :prepped
 ```
 
-The configuration is stored in `config`. To initiate the
-configuration, use:
+The configuration is stored in `integrant.repl.state/config`. To
+initiate the configuration, use:
 
 ```clojure
 user=> (init)
@@ -47,7 +47,7 @@ user=> (init)
 ```
 
 This will turn the configuration into a running system, which is
-stored in `system`.
+stored in `integrant.repl.state/system`.
 
 Because these two steps are common, we can instead use:
 
