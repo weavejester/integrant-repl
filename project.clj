@@ -5,4 +5,4 @@
             :url "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/tools.namespace "0.2.11"]
-                 [integrant "0.2.2"]])
+                 [integrant "0.3.3"]])
