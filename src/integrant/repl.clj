@@ -3,6 +3,8 @@
             [integrant.repl.state :as state]
             [clojure.tools.namespace.repl :as repl]))
 
+(repl/disable-reload! (find-ns 'integrant.core))
+
 (defn set-prep! [prep]
   (alter-var-root #'state/preparer (constantly prep)))
 
