@@ -19,8 +19,34 @@
 (defn- halt-system [system]
   (when system (ig/halt! system)))
 
+(defn- build-system [build wrap-ex]
+  (try
+    (build)
+    (catch clojure.lang.ExceptionInfo ex
+      (try
+        (ig/halt! (:system (ex-data ex)))
+        (catch clojure.lang.ExceptionInfo halt-ex
+          (throw (wrap-ex ex halt-ex))))
+      (throw ex))))
+
+(defn- init-system [config]
+  (build-system
+   #(ig/init config)
+   #(ex-info "Config failed to init; also failed to halt failed system"
+             {:init-exception %1}
+             %2)))
+
+(defn- resume-system [config system]
+  (build-system
+   #(ig/resume config system)
+   #(ex-info "Config failed to resume; also failed to halt failed system"
+             {:resume-exception %1}
+             %2)))
+
 (defn init []
-  (alter-var-root #'state/system (fn [sys] (halt-system sys) (ig/init state/config)))
+  (alter-var-root #'state/system (fn [sys]
+                                   (halt-system sys)
+                                   (init-system state/config)))
   :initiated)
 
 (defn go []
@@ -45,7 +71,10 @@
   (if-let [prep state/preparer]
     (let [cfg (prep)]
       (alter-var-root #'state/config (constantly cfg))
-      (alter-var-root #'state/system (fn [sys] (if sys (ig/resume cfg sys) (ig/init cfg))))
+      (alter-var-root #'state/system (fn [sys]
+                                       (if sys
+                                         (resume-system cfg sys)
+                                         (init-system cfg))))
       :resumed)
     (throw (prep-error))))
 
