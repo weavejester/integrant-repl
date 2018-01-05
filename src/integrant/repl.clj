@@ -30,9 +30,11 @@
             (throw (wrap-ex ex halt-ex)))))
       (throw ex))))
 
-(defn- init-system [config]
+(defn- init-system [config keys]
   (build-system
-   #(ig/init config)
+   (if keys
+     #(ig/init config keys)
+     #(ig/init config))
    #(ex-info "Config failed to init; also failed to halt failed system"
              {:init-exception %1}
              %2)))
@@ -44,15 +46,19 @@
              {:resume-exception %1}
              %2)))
 
-(defn init []
-  (alter-var-root #'state/system (fn [sys]
-                                   (halt-system sys)
-                                   (init-system state/config)))
-  :initiated)
+(defn init
+  ([] (init nil))
+  ([keys]
+   (alter-var-root #'state/system (fn [sys]
+                                    (halt-system sys)
+                                    (init-system state/config keys)))
+   :initiated))
 
-(defn go []
-  (prep)
-  (init))
+(defn go
+  ([] (go nil))
+  ([keys]
+   (prep)
+   (init keys)))
 
 (defn clear []
   (alter-var-root #'state/system (fn [sys] (halt-system sys) nil))
@@ -75,7 +81,7 @@
       (alter-var-root #'state/system (fn [sys]
                                        (if sys
                                          (resume-system cfg sys)
-                                         (init-system cfg))))
+                                         (init-system cfg nil))))
       :resumed)
     (throw (prep-error))))
 
