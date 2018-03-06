@@ -23,10 +23,11 @@
   (try
     (build)
     (catch clojure.lang.ExceptionInfo ex
-      (try
-        (ig/halt! (:system (ex-data ex)))
-        (catch clojure.lang.ExceptionInfo halt-ex
-          (throw (wrap-ex ex halt-ex))))
+      (if-let [system (:system (ex-data ex))]
+        (try
+          (ig/halt! system)
+          (catch clojure.lang.ExceptionInfo halt-ex
+            (throw (wrap-ex ex halt-ex)))))
       (throw ex))))
 
 (defn- init-system [config]
