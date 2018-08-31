@@ -79,10 +79,16 @@
       :resumed)
     (throw (prep-error))))
 
-(defn reset []
-  (suspend)
-  (repl/refresh :after 'integrant.repl/resume))
+(defn reset
+  ([]
+   (reset 'integrant.repl/resume))
+  ([after]
+   (suspend)
+   (repl/refresh :after after)))
 
-(defn reset-all []
-  (suspend)
-  (repl/refresh-all :after 'integrant.repl/resume))
+(defn reset-all
+  ([]
+   (reset-all 'integrant.repl/resume))
+  ([after]
+   (suspend)
+   (repl/refresh-all :after after)))
