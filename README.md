@@ -73,6 +73,19 @@ user=> (reset)
 :resumed
 ```
 
+Behind the scenes, Integrant-REPL uses [tools.namespace][]. You can
+set the directories that are monitored for changed files by using the
+`refresh-dirs` function:
+
+```clojure
+user=> (require '[clojure.tools.namespace.repl :refer [set-refresh-dirs]])
+nil
+user=> (set-refresh-dirs ["src/clj"])
+(["src/clj"])
+```
+
+[tools.namespace]: https://github.com/clojure/tools.namespace/
+
 
 ## License
 
