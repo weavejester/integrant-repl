@@ -80,8 +80,8 @@ set the directories that are monitored for changed files by using the
 ```clojure
 user=> (require '[clojure.tools.namespace.repl :refer [set-refresh-dirs]])
 nil
-user=> (set-refresh-dirs ["src/clj"])
-(["src/clj"])
+user=> (set-refresh-dirs "src/clj")
+("src/clj")
 ```
 
 [tools.namespace]: https://github.com/clojure/tools.namespace/
