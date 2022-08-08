@@ -20,7 +20,7 @@ Add the following dependency to your dev profile:
 
 Require the `integrant.repl` namespace in your user.clj file, and use
 the set-prep! function to define a zero-argument function that returns
-an Integrant configuration.
+a prepped Integrant configuration.
 
 For example:
 
@@ -28,7 +28,7 @@ For example:
 (ns user
   (:require [integrant.repl :refer [clear go halt prep init reset reset-all]]))
 
-(integrant.repl/set-prep! (constantly {::foo {:example? true}}))
+(integrant.repl/set-prep! #(ig/prep {::foo {:example? true}}))
 ```
 
 To prepare the configuration, you can now use:
