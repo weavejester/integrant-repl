@@ -1,11 +1,12 @@
 # Integrant-REPL
 
 A Clojure library that implements the user functions of Stuart Sierra's
-reloaded workflow for [Integrant][].
+[reloaded workflow][] for [Integrant][].
 
 It's very similar to [reloaded.repl][], except that it works for
 Integrant, rather than [Component][].
 
+[reloaded workflow]: https://cognitect.com/blog/2013/06/04/clojure-workflow-reloaded
 [integrant]: https://github.com/weavejester/integrant
 [reloaded.repl]: https://github.com/weavejester/reloaded.repl
 [component]: https://github.com/stuartsierra/component
