@@ -27,7 +27,8 @@ For example:
 
 ```clojure
 (ns user
-  (:require [integrant.repl :refer [clear go halt prep init reset reset-all]]))
+  (:require [integrant.core :as ig]
+            [integrant.repl :refer [clear go halt prep init reset reset-all]]))
 
 (integrant.repl/set-prep! #(ig/prep {::foo {:example? true}}))
 ```
