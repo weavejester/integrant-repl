@@ -26,7 +26,7 @@ Or to your Leiningen project file under the dev profile:
 
 Require the `integrant.repl` namespace in your user.clj file, and use
 the set-prep! function to define a zero-argument function that returns
-a prepped Integrant configuration.
+a prepared Integrant configuration.
 
 For example:
 
@@ -35,7 +35,9 @@ For example:
   (:require [integrant.core :as ig]
             [integrant.repl :refer [clear go halt prep init reset reset-all]]))
 
-(integrant.repl/set-prep! #(ig/prep {::foo {:example? true}}))
+(def config {::foo {:example? true}})
+
+(integrant.repl/set-prep! #(ig/expand config (ig/deprofile [:dev])))
 ```
 
 To prepare the configuration, you can now use:
