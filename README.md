@@ -11,9 +11,14 @@ Integrant, rather than [Component][].
 [reloaded.repl]: https://github.com/weavejester/reloaded.repl
 [component]: https://github.com/stuartsierra/component
 
-## Install
+## Installation
 
-Add the following dependency to your dev profile:
+Add the following dependency to your deps.edn file under a suitable
+alias:
+
+    integrant/repl {:mvn/version "0.3.3"}
+
+Or to your Leiningen project file under the dev profile:
 
     [integrant/repl "0.3.3"]
 
