@@ -91,6 +91,6 @@ user=> (set-refresh-dirs "src/clj")
 
 ## License
 
-Copyright © 2023 James Reeves
+Copyright © 2024 James Reeves
 
 Released under the MIT license.
