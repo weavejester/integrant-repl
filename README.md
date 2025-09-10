@@ -1,4 +1,4 @@
-# Integrant-REPL
+# Integrant-REPL [![Build Status](https://github.com/weavejester/integrant-repl/actions/workflows/test.yml/badge.svg)](https://github.com/weavejester/integrant-repl/actions/workflows/test.yml)
 
 A Clojure library that implements the user functions of Stuart Sierra's
 [reloaded workflow][] for [Integrant][].
