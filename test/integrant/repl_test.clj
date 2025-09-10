@@ -1,6 +1,5 @@
 (ns integrant.repl-test
-  (:require [clojure.test :refer :all]
-            [integrant.repl :refer :all]))
+  (:require [clojure.test :refer [deftest is testing]]))
 
 (deftest a-test
   (testing "FIXME, I fail."
