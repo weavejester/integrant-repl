@@ -106,9 +106,8 @@
     (throw (prep-error))))
 
 (defn- reload [opts]
-  (let [last-log (atom nil)]
-    (reload/reload (assoc opts :log-fn #(reset! last-log %)))
-    (println @last-log)))
+  (let [result (reload/reload (assoc opts :log-fn (fn [_])))]
+    (prn :reloaded (apply list (:loaded result)))))
 
 (defn reset
   "Suspend the current running system via [[suspend]], reload any changed
@@ -116,16 +115,14 @@
   []
   (suspend)
   (reload {})
-  ((requiring-resolve `resume))
-  :reset)
+  ((requiring-resolve `resume)))
 
 (defn reset-all
   "As [[reset]], except that *all* namespaces are reloaded."
   []
   (suspend)
   (reload {:only :loaded})
-  ((requiring-resolve `resume))
-  :reset)
+  ((requiring-resolve `resume)))
 
 (defn set-reload-dirs
   "Set a collection of directories to check for modified namespaces. Used by
