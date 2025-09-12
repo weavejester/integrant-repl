@@ -99,3 +99,6 @@
   (reload {:only :loaded})
   ((requiring-resolve `resume))
   :reset)
+
+(defn set-reload-dirs [dirs]
+  (reload/init {:dirs dirs}))
