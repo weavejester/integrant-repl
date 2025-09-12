@@ -82,19 +82,14 @@ user=> (reset)
 :resumed
 ```
 
-Behind the scenes, Integrant-REPL uses [tools.namespace][]. You can
-set the directories that are monitored for changed files by using the
-`refresh-dirs` function:
+By default, all local directories on the classpath are monitored for
+changes for files ending in `.clj`, `.cljc`, or `.cljs`. If you want to
+change this, you can use the `set-reload-options!` function:
 
 ```clojure
-user=> (require '[clojure.tools.namespace.repl :refer [set-refresh-dirs]])
-nil
-user=> (set-refresh-dirs "src/clj")
-("src/clj")
+user=> (set-reload-options! {:dirs ["src/clj"], :file-pattern #"\.clj"})
+{:since 1757694521568, :files {}, :namespaces {}}
 ```
-
-[tools.namespace]: https://github.com/clojure/tools.namespace/
-
 
 ## License
 
