@@ -1,7 +1,4 @@
-(ns integrant.repl.state
-  (:require [clojure.tools.namespace.repl :as repl]))
-
-(repl/disable-reload!)
+(ns ^:clj-reload/no-reload integrant.repl.state)
 
 (def config   nil)
 (def system   nil)

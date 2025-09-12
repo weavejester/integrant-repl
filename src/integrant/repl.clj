@@ -1,9 +1,7 @@
 (ns integrant.repl
-  (:require [integrant.core :as ig]
-            [integrant.repl.state :as state]
-            [clojure.tools.namespace.repl :as repl]))
-
-(repl/disable-reload! (find-ns 'integrant.core))
+  (:require [clj-reload.core :as reload]
+            [integrant.core :as ig]
+            [integrant.repl.state :as state]))
 
 (defn set-prep! [prep]
   (alter-var-root #'state/preparer (constantly prep)))
@@ -85,10 +83,19 @@
       :resumed)
     (throw (prep-error))))
 
+(defn- reload [opts]
+  (let [last-log (atom nil)]
+    (reload/reload (assoc opts :log-fn #(reset! last-log %)))
+    (println @last-log)))
+
 (defn reset []
   (suspend)
-  (repl/refresh :after 'integrant.repl/resume))
+  (reload {})
+  ((requiring-resolve `resume))
+  :reset)
 
 (defn reset-all []
   (suspend)
-  (repl/refresh-all :after 'integrant.repl/resume))
+  (reload {:only :loaded})
+  ((requiring-resolve `resume))
+  :reset)
