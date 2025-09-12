@@ -124,9 +124,18 @@
   (reload {:only :loaded})
   ((requiring-resolve `resume)))
 
-(defn set-reload-dirs
-  "Set a collection of directories to check for modified namespaces. Used by
-  [[reset]] and [[reset-all]]. If nil (the default) it will instead check any
-  local directory found on the classpath."
-  [dirs]
-  (reload/init {:dirs dirs}))
+(defn set-reload-options!
+  "Set options for which files to reload when calling [[reset]] or
+  [[reset-all]]. Takes the following options:
+
+  `:dirs`
+  : a collection of directories to search for modified files. If `nil`,
+  then all local directories on the classpath are checked. Defaults to
+  `nil`.
+
+  `:file-pattern`
+  : only files matching this regular expression are checked. Defaults to
+  `#\".*\\.cljc?\"`."
+  [{:keys [dirs file-pattern]
+    :or   {dirs nil, file-pattern #".*\.cljc?"}}]
+  (reload/init {:dirs dirs, :files file-pattern}))
