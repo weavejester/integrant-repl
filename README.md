@@ -16,11 +16,11 @@ Integrant, rather than [Component][].
 Add the following dependency to your deps.edn file under a suitable
 alias:
 
-    integrant/repl {:mvn/version "0.4.0"}
+    integrant/repl {:mvn/version "0.5.0"}
 
 Or to your Leiningen project file under the dev profile:
 
-    [integrant/repl "0.4.0"]
+    [integrant/repl "0.5.0"]
 
 ## Usage
 
