@@ -106,7 +106,7 @@
     (throw (prep-error))))
 
 (defn- reload [opts]
-  (let [result (reload/reload (assoc opts :log-fn (fn [_])))]
+  (let [result (reload/reload (assoc opts :log-fn (fn [& _])))]
     (prn :reloaded (apply list (:loaded result)))))
 
 (defn reset
