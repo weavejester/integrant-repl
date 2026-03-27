@@ -93,6 +93,6 @@ user=> (set-reload-options! {:dirs ["src/clj"], :file-pattern #"\.clj"})
 
 ## License
 
-Copyright © 2025 James Reeves
+Copyright © 2026 James Reeves
 
 Released under the MIT license.
